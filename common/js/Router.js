@@ -13,7 +13,7 @@ define(function(){
 		hash = hash.split('?');
 		hash = hash[0];
 		if(hash == null || hash == undefined || hash == ""){
-			window.location.hash = '#sns/userHome';
+			window.location.hash = '#home/home';
 		}
 		else if (hash != currentHash){
 			if( routes[hash] == undefined){
