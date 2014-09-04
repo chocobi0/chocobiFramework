@@ -1,0 +1,164 @@
+{{for statusInfo}}
+	<!-- 타이틀 -->
+	<div class="title" >
+		<h3>과제관리</h3>
+	
+		<!-- layer _바로비팅  -->
+		<div class="fr mt5 pr" >
+			<button class="button2" onclick="saveSpotConference('{{:work_id}}', '{{:ttl}}')" >바로미팅</button>
+			<div class="layerDiv layer_goMeet" id="spotConference" style="display:none;" >
+			</div>
+		</div>
+		<!-- //layer _바로비팅  -->
+	
+	</div>
+	<!-- //타이틀 -->
+	
+	<div id="work_input" >
+		<table class="write" summary="과제관리" >
+			<caption>과제 관리</caption>
+			<colgroup>
+				<col width="15%" />
+				<col width="35%" />
+				<col width="15%" />
+				<col width="35%" />
+			</colgroup>
+			<tbody>
+				<tr id="ttl" >
+					<th>제목</th>
+					<td colspan="3" >{{:ttl}}</td>
+				</tr>
+				<tr>
+					<th>이전과제</th>
+					<td colspan="3" >{{:up_work_nm}}</td>
+				</tr>
+				<tr>
+					<th>분류</th>
+					<td>{{:grp_cd_nm}}</td>
+					<th>전략방향</th>
+					<td>{{:grp_dtl_cd_nm}}</td>
+				</tr>
+				<tr>
+					<th>상태</th>
+					<td >{{:pgrs_st_nm}}</td>
+					<th>진행률</th>
+					<td >
+						<div class="progress_bar" >
+							<span class="progress" >
+								<span class="bar" style="width:{{:(pgrs_rate == null) ? 0 : pgrs_rate}}%;" ></span>
+							</span>
+							<span class="rate" >{{:(pgrs_rate == null) ? 0 : pgrs_rate}}%</span>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<th>시작일자</th>
+					<td>{{if start_dt}} {{:start_dt.formatDate()}} {{/if}}</td>
+					<th>종료일자</th>
+					<td>{{if end_dt}} {{:end_dt.formatDate()}} {{/if}}</td>
+				</tr>
+				<tr>
+					<th>담당자</th>
+					<td>
+						<ul class="thumbnail2" >
+							<li id="user_{{:crt_usr_id}}" >
+								<p class="photo" >
+									<a href="../sns/userHome.html?tar_usr_id={{:crt_usr_id}}" ><img src="../../../file/photo.json?file_path={{:crt_usr_photo}}&noimg=resources/img/null60.png" alt="{{:crt_usr_nm}}" title="{{:crt_usr_nm}}" /></a>
+								</p>
+								<div class="person" >
+									<strong>{{:crt_usr_nm}}</strong>
+								</div>
+								<input type="hidden" name="cfrc_usr_id" value="{{:crt_usr_id}}" >
+							</li>
+						</ul>
+					</td>
+					<th>책임자</th>
+					<td >
+						<ul class="thumbnail2" >
+						{{for listsnspostuser}}
+							{{if fnl_appr_yn == 'Y'}}
+							<li id="user_{{:usr_id}}" >
+								<p class="photo" >
+									<a href="../sns/userHome.html?tar_usr_id={{:usr_id}}" ><img src="../../../file/photo.json?file_path={{:usr_photo}}&noimg=resources/img/null60.png" alt="{{:usr_nm}}" title="{{:usr_nm}}" /></a>
+								</p>
+								<div class="person" >
+									<strong>{{:usr_nm}}</strong>
+								</div>
+								<input type="hidden" name="cfrc_usr_id" value="{{:usr_id}}" >
+							</li>
+							{{/if}}
+						{{/for}}
+						</ul>
+					</td>
+				</tr>
+				<tr>
+					<th>참여자</th>
+					<td colspan="3" >
+						<ul class="thumbnail2" >
+						{{for listsnspostuser}}
+							{{if fnl_appr_yn == 'N'}}
+							<li id="user_{{:usr_id}}" >
+								<p class="photo" >
+									<a href="../sns/userHome.html?tar_usr_id={{:usr_id}}" ><img src="../../../file/photo.json?file_path={{:usr_photo}}&noimg=resources/img/null60.png" alt="{{:usr_nm}}" title="{{:usr_nm}}" /></a>
+								</p>
+								<div class="person" >
+									<strong>{{:usr_nm}}</strong>
+								</div>
+								<input type="hidden" name="cfrc_usr_id" value="{{:usr_id}}" >
+							</li>
+							{{/if}}
+						{{/for}}
+						</ul>
+					</td>
+				</tr>
+				<tr>
+					<th>내용</th>
+					<td colspan="3" >{{:cntn}}</td>
+				</tr>
+				<!--
+				<tr>
+					<th>결과</th>
+					<td colspan="3" >{{:rest_cntn}}</td>
+				</tr>
+				-->
+				<tr>
+					<th >첨부파일</th>
+					<td colspan="3" id="docFileList" >
+						{{if doc_file_list.length > 0}}
+						<a id="btnDocDownloadFile" href="javascript:;" class="button b" >파일 다운로드</a>
+						{{/if}}
+						<div class="file_list" >
+							<ul>
+							{{for doc_file_list}}
+								<li id="{{:attach_file_id}}" onclick="selectFile('doc', this);" >{{:attach_nm}}
+									<input type="hidden" name="attach_file_id" value="{{:attach_file_id}}" >
+									<input type="hidden" name="attach_tp_cd" value="FILE" >
+									<input type="hidden" name="attach_nm" value="{{:attach_nm}}" >
+									<input type="hidden" name="physcl_file_nm" value="{{:physcl_file_nm}}" >
+									<input type="hidden" name="attach_yn" value="Y" >
+								</li>
+							{{else}}
+								<li>자료가 없습니다.</li>
+							{{/for}}
+							</ul>
+						</div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	
+		<!-- 버튼 -->
+		<div class="btn_wrap tr" >
+			{{if (work_st == 'NST' && crt_usr_yn == 'Y') || (work_st == 'ING' && tar_usr_yn == 'Y') }}
+			{{/if}}
+			{{if (pgrs_st != 'FIN')}}
+			<a href="./workWrite.html?work_id={{:work_id}}" class="button b" >수정</a>
+			{{/if}}
+			{{if (pgrs_st != 'FIN') && (crt_usr_yn == 'Y')}}
+			<a href="javascript:;" class="button b" onclick="deleteSnsWork('{{:work_id}}')" >삭제</a>
+			{{/if}}
+			<a href="./workHome.html" class="button" >목록</a>
+		</div>
+		<!-- //버튼 -->
+	</div>
+{{/for}}

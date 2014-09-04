@@ -1,0 +1,21 @@
+<!-- feed box -->
+{{for statusInfo}}
+	<article class="feedBox feedList mark">
+		<div class="feedInner">
+			<header class="thumbnail">
+				<figure class="photo"><a href="../sns/userHome_p.html?tar_usr_id={{:crt_usr_id}}" ><img src="../../../file/image.json?file_path={{:crt_usr_photo}}&noimg=mobile_phone/resources/images/null60.png" alt="{{:crt_usr_nm}}" title="{{:crt_usr_nm}}" /></a></figure>
+				<span class="stit">{{:pgrs_st_nm}}</span>
+				<h4 class="tit ellip"><a href="./milestoneWrite_p.html?work_id={{:work_id}}&miles_id={{:miles_id}}" >{{:ttl}}</a></h4>
+			</header>
+		</div>
+		<footer class="feedGood">
+			<span class="feedDate">시작일자: {{:(start_dt == null) ? '' : start_dt.formatDate()}}</time></span></span>
+			<span class="feedDate color1">종료일자: <time>{{:(end_dt == null) ? '' : end_dt.formatDate()}}</time></span>
+		</footer>
+	</article>
+	{{else}}
+	<article class="feedBox feedList">
+		<div class="feedNo">조회된 데이터가 없습니다.</div>
+	</article>
+{{/for}}
+<!--// feed box -->

@@ -1,0 +1,16 @@
+<li id="reply_li_{{:post_id}}" >
+	<div class="thumb" ><img src="../../../file/image.json?file_path={{>crt_usr_photo_img_min}}&noimg=resources/img/null150.png" alt="{{:crt_usr_nm}}" title="{{:crt_usr_nm}}" data="{{:crt_usr_id}}"></div>
+	<div class="reply_txt" >
+		<strong class="name" ><a href="../sns/userHome.html?tar_usr_id={{:crt_usr_id}}" >{{>crt_usr_nm}}</a></strong>
+		<div class="para" >
+			{{if cntn}} {{if list_user }} {{:cntn.makePostContent(list_user)}} {{else}} {{:cntn.replaceNewLine()}} {{/if}} {{/if}}
+		</div>
+		<div class="good">
+			<a href="javascript:;" class="good2{{:(like_my=='Y' ? ' on' : '')}}" onclick="$Like.toggleSnsLike({data:{post_id:'{{:post_id}}'}},function(jsonData){console.log(jsonData); $('#reply_li_{{>post_id}} .reply_txt .good2_num em').text(jsonData.statusInfo.like_cnt); if(jsonData.statusInfo.like_my=='Y') { $('#reply_li_{{>post_id}} .reply_txt .good2').removeClass('good2').addClass('good2 on'); } else { $('#reply_li_{{>post_id}} .reply_txt .good2').removeClass('good2 on').addClass('good2'); }  });">좋아요갯수</a><a href="javascript:;" class="good2_num" onclick="showLikeUserList('{{:post_id}}')"><em>{{:like_cnt}}</em></a>
+			<span class="date" ><span>{{:crt_dttm.formatTimeDateDay()}}</span>{{if dvc_tp_nm}} from {{:dvc_tp_nm}} {{/if}}</span>
+	    </div>
+	    {{if is_owner == 'Y'}}
+		<p class="bt" ><a href="javascript:;" onclick="deleteSnsPostReply(this)" class="deleteBtn"  value='{"up_post_id" : "{{:up_post_id}}", "post_id" :"{{:post_id}}"}'><img src="../../../resources/img/btn_feed_delete.gif" alt="삭제" ></a></p>
+		{{/if}}
+	</div>
+</li>

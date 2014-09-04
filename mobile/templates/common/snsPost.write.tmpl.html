@@ -1,0 +1,82 @@
+<div class="layerUI">
+	<h2 class="hidden">게시글작성 입력폼</h2>
+	<form name="frmPost" id="frmPost">
+	<input type="hidden" name="dvc_tp_cd" value="MOBILE"/>
+	<input type="hidden" name="tar_usr_id" value="" />
+	<input type="hidden" name="tar_grp_id" value="" />
+	<input type="hidden" name="tar_obj_id" value="{{:tar_obj_id}}" />
+	<input type="hidden" name="tar_obj_tp" value="{{:tar_obj_tp}}" />
+	<input type="hidden" name="tar_ttl" value="" />
+	<input type="hidden" name="post_tp" value="FEED"/>
+	<input type="hidden" name="post_mode" value=""/>
+	<input type="hidden" name="sort_mode" value="CRT"/>
+	
+	<div class="snsTarget">	
+		<select id="target_group_select"></select>
+		<div class="name" id="current_group"></div>
+	</div>
+	
+	<div class="snsInput">
+		<textarea rows="10" cols="1" name="cntn" id="form_cntn" placeholder="내용을 입력해 주세요."></textarea>
+		<div id="userSearchArea"></div>
+		<div id="postUserList" style="display:none"><ul></ul></div>
+	</div>
+	
+	 
+	<div class="snsForm">
+	 
+		<div id="postLinkList" class="link_url_list"><!-- linkUrl입력후 저장된 리스트 레이어 -->
+			<ul></ul>
+		</div>
+			
+		<div class="linkUrl" id="linkUrl" style="display:none;">
+			<strong class="t">링크스크랩</strong>
+			<div class="linkInput">
+				<input type="text" name="userLink" id="userLink" placeholder="링크할 주소를 입력하세요..." value="" />
+				<a href="javascript:;" onclick="return false;" class="linkBt">링크검색</a>
+			</div>
+		</div>
+	
+		<div id="postPoll" class="poll" style="display:none;">
+			<div class="t">설문항목 (최소 2개 최대 10개 ) <input type="checkbox" value="N" name="survey_usr_open_yn" id="survey_usr_open_yn" onclick="this.checked ? this.value='N' : this.value='Y'"/> <label for="survey_usr_open_yn">무기명 설문</label></div>
+			<ul id="poll_content">
+				<li>
+					<input type="text" name="survey_itm_nm" placeholder="항목을 입력해주세요(50자)" value="" maxlength="50"/>
+					<a href="javascript:;" class="bt btMinus">항목삭제<span class='numSeq' style='display:none'>1</span></a>
+				</li>
+				<li>
+					<input type="text" name="survey_itm_nm" placeholder="항목을 입력해주세요(50자)" value="" maxlength="50"/>
+					<a href="javascript:;" class="bt btPlus">항목추가<span class='numSeq' style='display:none'>2</span></a>
+				</li>
+			</ul>
+		</div>
+		</div>
+		</form>
+		<div class="snsForm">
+		<div class="fileUP" id="fileUP" style="display:none;">
+			<strong class="t">파일 업로드</strong>
+			<div class="feed_slider_wrap default-skin" id="file_upload_container"><!-- 보이는 영역  -->
+				<div class="feed_slider_box" style="width:730px;">
+					<ul id="upload_panel"></ul>
+					<div class="upload_btn">
+						<div>
+							<form name="fileUploadPostWrite" id="fileUploadPostWrite" action="../../../file/upload.json" method="POST" enctype="multipart/form-data" onsubmit="return false;">
+								<input type="file" name="file" class="upload_form" multiple="multiple">
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+	</div>
+	 
+	<div class="optBt clearfix">
+		<button class="file">버튼</button>
+		<button class="link">링크</button>
+		<button class="poll">설문</button>
+		<!-- 
+		<a href="javascript:;" onclick="return false;" class="button2" id="savePostBtn">올리기</a>
+		 -->
+	</div>
+</div>

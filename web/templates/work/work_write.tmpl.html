@@ -1,0 +1,218 @@
+			<!-- 타이틀 -->
+			<div class="title" ><h3>과제관리</h3></div>
+			<!-- //타이틀 -->
+
+			<form id="frmPost" name="frmPost" onsubmit="return false;" >
+			</form>
+
+			<div id="work_input" >
+				<!-- <form id="frmPost" name="frmPost" onsubmit="return false;" > -->
+				<input type="hidden" name="work_id" value="{{:work_id}}" />
+				<input type="hidden" name="post_id" value="{{:post_id}}" />
+				<input type="hidden" name="crt_usr_id" id="crt_usr_id" value="{{:crt_usr_id}}" />
+
+				<table class="write" summary="업무등록 레이어입니다." >
+					<caption>업무 관리</caption>
+					<tbody>
+						<tr>
+							<th>제목</th>
+							<td colspan="3" ><input type="text" name="ttl" id="" maxlength="40" placeholder="업무 제목을 입력하세요." value="{{:ttl}}" ></td>
+						</tr>
+						<tr>
+							<th>이전과제</th>
+							<td colspan="3" >
+								<div class="search_form" >
+									<input type="hidden" name="up_work_id" value="{{:up_work_id}}" />
+									<input type="text" name="up_work_nm" id="" maxlength="200" placeholder="이전 과제을 검색하세요." value="{{:up_work_nm}}" style="width:88.5%" readonly="readonly" >
+									<a href="javascript:;" id="searchBtn" class="btn_up_work_search">검색</a>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<th>분류</th>
+							<td>
+								<div class="sort_dropdown" id="sort_dropdown_grp_cd" style="width:90px;" >
+									<input type="hidden" name="grp_cd" value="{{:(grp_cd == null) ? 'GNL' : grp_cd}}" />
+									<button type="button" >{{if grp_cd_nm != null}} {{:grp_cd_nm}} {{else}} 일반 {{/if}}</button>
+									<ul style="height:58px;display:none;" >
+										<li data="GNL" ><a href="javascript:;" >일반</a></li>
+										<li data="STSK" class="last" ><a href="javascript:;" >전략과제</a></li>
+									</ul>
+								</div>
+							</td>
+							<th>전략방향</th>
+							<td>
+								<div class="sort_dropdown" id="sort_dropdown_grp_dtl_cd" style="width:180px;" >
+									<input type="hidden" name="grp_dtl_cd" value="{{:grp_dtl_cd}}" />
+									<button type="button" >{{if grp_dtl_cd_nm != null}} {{:grp_dtl_cd_nm}} {{else}} 없음 {{/if}}</button>
+									<ul style="height:107px;display:none;" >
+										<li data="STSK_000" ><a href="javascript:;" >없음</a></li>
+										<li data="STSK_001" ><a href="javascript:;" >방폐물관리 전문성 제고</a></li>
+										<li data="STSK_002" ><a href="javascript:;" >사용후핵연료 사업역량 강화</a></li>
+										<li data="STSK_003" ><a href="javascript:;" >환경보전-안전역할 강화</a></li>
+										<li data="STSK_004" class="last" ><a href="javascript:;" >지속가능경영체계 고도화</a></li>
+									</ul>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<th>상태</th>
+							<td >
+								<div class="sort_dropdown" id="sort_dropdown_pgrs_st" style="width:90px;" >
+									<input type="hidden" name="pgrs_st" value="{{:(pgrs_st == null) ? 'NST' : pgrs_st}}" />
+									<button type="button" >{{if pgrs_st_nm != null}} {{:pgrs_st_nm}} {{else}} 대기 {{/if}}</button>
+									<ul style="height:80px;display:none;" >
+										<li data="NST" ><a href="javascript:;" >대기</a></li>
+										<li data="ING" ><a href="javascript:;" >진행</a></li>
+										<li data="FIN" class="last" ><a href="javascript:;" >완료</a></li>
+									</ul>
+								</div>
+							</td>
+							<th>진행률</th>
+							<td ><input type="text" name="pgrs_rate" id="pgrs_rate" maxlength="3" placeholder="숫자를 입력하세요." style="width:100px;" value="{{:pgrs_rate}}" ></td>
+						</tr>
+						<tr>
+							<th>시작일자</th>
+							<td><input type="text" id="start_dt" name="start_dt" class="dateis" placeholder="날짜선택" readonly="readonly" value="{{:start_dt == undefined ? '' : start_dt.formatDate()}}" ></td>
+							<th>종료일자</th>
+							<td><input type="text" id="end_dt" name="end_dt" class="dateis" placeholder="날짜선택" readonly="readonly" value="{{:end_dt == undefined ? '' : end_dt.formatDate()}}" ></td>
+						</tr>
+						<tr>
+							<th>담당자</th>
+							<td>
+								<ul class="thumbnail2" >
+									<li id="user_{{:usr_id}}" >
+										<p class="photo" >
+											<a href="../sns/userHome.html?tar_usr_id={{:usr_id}}" ><img src="../../../file/photo.json?file_path={{:usr_photo}}&noimg=resources/img/null60.png" alt="{{:usr_nm}}" title="{{:usr_nm}}" /></a>
+										</p>
+										<div class="person" >
+											<strong>{{:usr_nm}}</strong>
+										</div>
+									</li>
+								</ul>
+							</td>
+							<th>책임자</th>
+							<td>
+								{{if pgrs_st != 'FIN'}}
+								<div class="user_serarch_wrap" id="UserSearchByName_fnlApprYn_Y" >
+									<input type="text" id="" name="srchTextY" placeholder="대상자 검색" value=""/>
+									<span class="orgViewClass" id="fnl_appr_y" ><img src="../../../resources/img/ico_org.png" alt="조직도보기" /></span>
+								</div>
+								{{/if}}
+								<!-- 추가된 참조자 -->
+								<div class="user_serarch_wrap" id="work_user_list_Y" >
+									<ul class="thumbnail2" data="Y" >
+									{{for listsnspostuser}}
+										{{if fnl_appr_yn == 'Y'}}
+										<li id="user_{{:usr_id}}" >
+											<input type="hidden" name="work_usr_id" value="{{:usr_id}}" >
+											<input type="hidden" name="fnl_appr_yn" id="fnl_appr_yn" value="Y" >
+											<p class="photo" >
+												<a href="javascript:;" ><img src="../../../file/photo.json?file_path={{:usr_photo}}&noimg=resources/img/null60.png" alt="{{:usr_nm}}" title="{{:usr_nm}}" ></a>
+											</p>
+											<div class="person" >
+												<strong>{{:usr_nm}}</strong>
+												{{if pgrs_st != 'FIN'}}
+												<a href="javascript:;" class="close" onclick="deletedUser('{{:usr_id}}', this)" ><img src="../../../resources/img/btn_re_delete.gif" alt="참석자삭제" ></a>
+												{{/if}}
+											</div>
+										</li>
+										{{/if}}
+									{{/for}}
+									</ul>
+								</div>
+								<!-- //추가된 참조자 -->
+							</td>
+						</tr>
+						<tr>
+							<th>참여자</th>
+							<td colspan="3" >
+								{{if pgrs_st != 'FIN'}}
+								<div class="user_serarch_wrap" id="UserSearchByName_fnlApprYn_N" >
+									<input type="text" id="" name="srchTextN" placeholder="대상자 검색" value="" />
+									<span class="orgViewClass" id="fnl_appr_n" ><img src="../../../resources/img/ico_org.png" alt="조직도보기" /></span>
+								</div>
+								{{/if}}
+								<!-- 추가된 참조자 -->
+								<div class="user_serarch_wrap" id="work_user_list_N" >
+									<ul class="thumbnail2" data="N" >
+									{{for listsnspostuser}}
+										{{if fnl_appr_yn == 'N'}}
+										<li id="user_{{:usr_id}}" >
+											<input type="hidden" name="work_usr_id" value="{{:usr_id}}" >
+											<input type="hidden" name="fnl_appr_yn" value="N" >
+											<p class="photo" >
+												<a href="javascript:;" ><img src="../../../file/photo.json?file_path={{:usr_photo}}&noimg=resources/img/null60.png" alt="{{:usr_nm}}" title="{{:usr_nm}}" ></a>
+											</p>
+											<div class="person" >
+												<strong>{{:usr_nm}}</strong>
+												{{if pgrs_st != 'FIN'}}
+												<a href="javascript:;" class="close" onclick="deletedUser('{{:usr_id}}', this)" ><img src="../../../resources/img/btn_re_delete.gif" alt="참석자삭제" ></a>
+												{{/if}}
+											</div>
+										</li>
+										{{/if}}
+									{{/for}}
+									</ul>
+								</div>
+								<!-- //추가된 참조자 -->
+							</td>
+						</tr>
+						<tr>
+							<th>내용</th>
+							<td colspan="3" ><textarea name="cntn" rows="" cols="" placeholder="내용을 입력해 주세요." style="height: 55px; resize: none;" >{{:cntn}}</textarea></td>
+						</tr>
+<!--
+						<tr>
+							<th>결과</th>
+							<td colspan="3" ><textarea name="rest_cntn" rows="" cols="" placeholder="결과를 입력해 주세요." style="resize: none;" >{{:rest_cntn}}</textarea></td>
+						</tr>
+-->
+						<tr>
+							<th>첨부파일</th>
+							<td colspan="3" id="docFileList" >
+								<!-- <a id="btnDocFileUpload" href="javascript:;" class="button">파일 업로드</a> -->
+								<div class="filesearch fl mr5" style="width:75px;">
+									<!--
+									<label for="filetx">파일첨부</label>
+									<input type="text" id="filetx" class="fileInput">
+									-->
+									<span>
+										<button class="button b">파일 업로드</button>
+										<form name="docFileUpload" id="docFileUpload" action="../../../file/upload.json" method="POST" enctype="multipart/form-data" onsubmit="return false;" >
+										<input type="file" name="file" class="upload_form" multiple="multiple" title="파일 업로드" >
+										</form>
+									</span>
+								</div>
+								<a id="btnDocDeleteFile" href="javascript:;" class="button">삭제</a>
+								<div class="file_list">
+									<ul>
+									{{for doc_file_list}}
+										<li id="{{:attach_file_id}}" onclick="selectFile('doc', this);" >{{:attach_nm}}
+										<input type="hidden" name="attach_file_id" value="{{:attach_file_id}}" >
+										<input type="hidden" name="attach_tp_cd" value="FILE" >
+										<input type="hidden" name="attach_nm" value="{{:attach_nm}}" >
+										<input type="hidden" name="physcl_file_nm" value="{{:physcl_file_nm}}" >
+										<input type="hidden" name="attach_yn" value="Y" >
+										</li>
+									{{/for}}
+									</ul>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<!-- </form> -->
+
+				<!-- 버튼 -->
+				<div class="btn_wrap tr" >
+					{{if (work_st == null) || (work_st == 'NST' && crt_usr_yn == 'Y') || (work_st == 'ING' && tar_usr_yn == 'Y') }}
+					{{/if}}
+					{{if (pgrs_st != 'FIN')}}
+					<a href="javascript:;" class="button b" onclick="saveSnsWork();" >저장</a>
+					{{/if}}
+					<a href="{{:(work_id == null) ? './workHome.html' : './workView.html?work_id=' + work_id}}" class="button" >취소</a>
+					<a href="./workHome.html" class="button d" >목록</a>
+				</div>
+				<!-- //버튼 -->
+			</div>

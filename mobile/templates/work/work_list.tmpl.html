@@ -1,0 +1,30 @@
+<!-- feed box -->
+{{for statusInfo}}
+	<article class="feedBox feedList">
+		<div class="feedInner">
+			<header class="thumbnail">
+				<figure class="photo"><a href="#sns/userHome?tar_usr_id={{:usr_id}}" ><img src="../../../file/image.json?file_path={{:usr_photo}}&noimg=mobile_phone/resources/images/null60.png" alt="{{:usr_nm}}" title="{{:usr_nm}}" /></a></figure>
+				<div class="ct">
+					<strong class="name">{{:owner_nm}}</strong>
+					<span class="part ib">{{:pgrs_st_nm}}</span>
+					<h4 class="tx color1 ellip2"><a href="#work/workView?work_id={{:work_id}}" id="ttl_{{:work_id}}" >{{:ttl}}</a></h4>
+				</div>
+			</header>
+		</div>
+		<footer class="feedGood">
+			<div class="feedTime">
+				<span>시작일: <time>{{:(start_dt == null) ? '' : start_dt.formatDate()}}</time></span>
+				<span class="color1">종료일: <time>{{:(end_dt == null) ? '' : end_dt.formatDate()}}</time></span>
+			</div>
+			<div class="progress">
+				<span class="progressBg"><span class="progressBar" style="width:{{:(pgrs_rate == null) ? 0 : pgrs_rate}}%;"></span></span><em class="progressNum">{{:(pgrs_rate == null) ? 0 : pgrs_rate}}%</em>
+			</div>
+		</footer>
+	</article>
+{{else}}
+	<article class="feedBox feedList">
+		<div class="feedNo">조회된 데이터가 없습니다.</div>
+	</article>
+{{/for}}
+<!--// feed box -->
+<div class="btn_wrap" id="add_more_btn"><a href="javascript:;" class="button more">게시물더보기</a></div>

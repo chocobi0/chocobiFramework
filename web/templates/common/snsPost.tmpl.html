@@ -1,0 +1,143 @@
+<!-- SNS POST 화면 -->
+<!-- post write -->
+	<div id="feed_hide_btn" class="feed_hide_btn"><button class="button">피드숨김</button></div>
+	<div id="feed_hide_cont" class="feed_hide_cont"><!-- 피드숨기기영역 -->
+		<div class="post_write">
+			<!-- 글쓰기 폼 -->
+			<div class="post_up">
+				<form name="frmPost" id="frmPost">
+				<input type="hidden" name="dvc_tp_cd" value="WEB"/>
+				<input type="hidden" name="tar_usr_id" value="" />
+				<input type="hidden" name="tar_grp_id" value="" />
+				<input type="hidden" name="tar_obj_id" value="" />
+				<input type="hidden" name="tar_obj_tp" value="" />
+				<input type="hidden" name="tar_ttl" value="" />
+				<input type="hidden" name="post_tp" value="FEED"/>
+				<input type="hidden" name="post_mode" value="FOLLOW"/>
+				<input type="hidden" name="sort_mode" value="CRT"/>
+				<!-- 글쓰기 창 -->
+				<div class="input_write"><label for="form_cntn">포스트입력</label><textarea rows="" cols="" name="cntn" id="form_cntn" placeholder="내용을 입력해 주세요."></textarea>
+				<!-- <textarea rows="" cols="" name="cntn2" id="form_cntn_hidden" ></textarea> -->
+					<div id="userSearchArea"></div>
+					<!-- 사용자 정의 레이어 -->
+					<div id="postUserList" style="display:none"><ul></ul></div>
+					<!-- //사용자 정의 레이어 -->
+				</div>
+				<!-- //글쓰기 창 -->
+
+			<!-- 링크url -->
+				<div class="link_url" style="display: none;">
+					<input type="text" name="userLink" id="userLink" placeholder="링크할 주소를 입력하세요..." value="" />
+					<a href="javascript:;"><img src="web/img/btn_link.gif" alt="링크입력" /></a>
+				</div>
+			<!-- //링크url -->
+
+			<!-- 레이어 설문 -->
+				<div id="postPoll" class="poll_form" style="display: none;">
+					<h3>설문작성</h3>
+					<table class="write">
+						<caption>설문작성레이어</caption>
+						<colgroup>
+							<col width="20%" />
+							<col />
+						</colgroup>
+						<tbody>
+							<tr>
+								<th>설문항목<br /><span class="ex">(최소 2개,<br> 최대 10개)</span></th>
+								<td id="poll_content">
+									<p class="pgap">
+										<input type="text" name="survey_itm_nm" placeholder="항목을 입력해주세요(50자)" value="" style="width:87%;" maxlength="30"/>
+										<a href="javascript:;" class="poll_add">
+											<img src="web/img/research_del.gif" alt="항목추가" />
+											<label class='numSeq' style='display:none'>1</label>
+										</a>
+
+									</p>
+									<p class="pgap">
+										<input type="text" name="survey_itm_nm" placeholder="항목을 입력해주세요(50자)" value="" style="width:87%;" maxlength="30"/>
+										<a href="javascript:;" class="poll_add">
+											<img src="web/img/research_add.gif" alt="항목추가" />
+											<label class='numSeq' style='display:none'>2</label>
+										</a>
+									</p>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+
+				</div><!-- //submit_wrap -->
+			<!-- //레이어 설문 -->
+
+				<div id="postLinkList" class="link_url_list" style="display: none;">
+					<ul></ul>
+				</div>
+				</form>
+			<!-- 파일 올리기 -->
+				<div class="file_up" style="display: none;">
+					<strong class="tit">파일 업로드</strong>
+					<div class="feed_slider_wrap default-skin" id="file_upload_container"><!-- 보이는 영역  -->
+						<div class="feed_slider_box" style="width:730px;">
+							<ul id="upload_panel"></ul>
+							<div class="upload_btn"><!-- 빈이미지 -->
+								<div>
+									<form name="fileUploadPostWrite" id="fileUploadPostWrite" action="../file/upload.json" method="POST" enctype="multipart/form-data" onsubmit="return false;">
+										<input type="file" name="file" class="upload_form" multiple="multiple">
+									</form>
+								</div>
+							</div><!--  빈이미지 -->
+						</div><!-- //feed_slider_box -->
+					</div>
+				</div>
+			<!-- //파일 올리기 -->
+
+			<!--  공개여부  -->
+				<div class="target_select">
+					<!-- 옵션버튼 -->
+					<ul class="optBt">
+						<li class="file"><a href="javascript:;" title="최대 200M">파일</a></li>
+						<li class="link"><a href="javascript:;">링크</a></li>
+						<li class="poll"><a href="javascript:;">설문</a></li>
+					</ul>
+					<!-- //옵션버튼 -->				
+					<!-- select 드롭다운메뉴 -->
+					<div class="sort_dropdown" id="target_dropdown">
+						<button type="button">전체공개</button>
+						<ul style="height:165px;display:none;">
+						</ul>
+						<div class="name" id="current_group"></div>
+					</div>
+					<!-- //select -->
+					<a href="javascript:;" class="button size btn_post" title="작성한 텍스트 올리기버튼" id="savePostBtn">올리기</a>
+				</div>
+			<!-- //공개여부  -->
+
+			</div>
+			<!-- new File_UP end -->
+		</div>
+		<!-- //post write -->
+
+		<div class="post_array">
+			<!-- 정렬기분 : select 드롭다운메뉴 -->
+			<div class="sort_dropdown" id="sort_dropdown">
+				<button type="button">정렬기준 : 최근업데이트</button>
+				<ul style="display: none;">
+					<li><a href="javascript:;">게시날짜</a></li>
+					<li><a href="javascript:;">최근업데이트</a></li>
+				</ul>
+			</div><!-- //select -->
+
+			<div class="search">
+				<input type="text" id="post_search_text" name="post_search_text" placeholder="Feed 검색..." value="" />
+				<a href="javascript:;"><img src="web/img/btn_feedsearch.gif" alt="검색" id="btn_feedsearch"/></a>
+			</div><!-- //search -->
+		</div>
+		<!-- //post list -->
+
+		<!-- Feed 리스트-->
+		<div class="feed_wrap"><ul id="feedBoxList"></ul></div>
+		<!--//Feed 리스트 -->
+
+		<!--게시물 더 보기 버튼-->
+		<div class="btn_more"><a href="javascript:void(0)">게시물 더 보기</a></div>
+		<!-- //게시물 더 보기 버튼-->
+	</div>

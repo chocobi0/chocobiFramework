@@ -1,0 +1,148 @@
+{{for statusInfo}}
+
+	{{if (list_photo) && detailView}}
+		<div class="photo_scroll" id="imageScroller"></div>
+	{{/if}}
+		
+	
+<article class="feedBox" id="post_{{>post_id}}" >
+	<div class="feedInner">
+		<header class="thumbnail">
+			<figure class="photo"><a href="userHome_p.html?tar_usr_id={{:crt_usr_id}}"><img src="../../../file/image.json?file_path={{:crt_usr_photo_img_min}}&noimg=mobile_phone/resources/images/null60.png" alt="{{:crt_usr_nm}}" title="{{:crt_usr_nm}}" ></a></figure>
+				{{if tar_grp_nm}}
+					<h4 class="name"><a href="groupHome_p.html?grp_id={{:tar_grp_id}}">{{:tar_grp_nm}}</a></h4>
+					<span class="part"><a href="userHome_p.html?tar_usr_id={{:crt_usr_id}}">{{:crt_usr_nm}}</a></span>
+				{{else obj_ttl}}
+					{{if tar_obj_tp == 'CFRC'}}
+						<h4 class="name"><a href="../conference/conferenceView_p.html?cfrc_id={{:tar_obj_id}}">{{:obj_ttl}}</a></h4>
+					{{else tar_obj_tp == 'WORK'}}
+						<h4 class="name"><a href="../work/workView_p.html?work_id={{:tar_obj_id}}">{{:obj_ttl}}</a></h4>
+					{{else tar_obj_tp == 'TASK'}}
+						<h4 class="name"><a href="../task/taskView_p.html?task_id={{:tar_obj_id}}">{{:obj_ttl}}</a></h4>
+					{{else tar_obj_tp == 'APPR'}}
+						<h4 class="name"><a href="../memo/memoView_p.html?appr_id={{:tar_obj_id}}">{{:obj_ttl}}</a></h4>
+					{{/if}}
+					-
+					<span class="part"><a href="../sns/userHome_p.html?tar_usr_id={{:crt_usr_id}}">{{:crt_usr_nm}}</a></span>
+
+				{{else crt_usr_nm == tar_usr_nm}}
+					<h4 class="name"><a href="../sns/userHome_p.html?tar_usr_id={{:crt_usr_id}}">{{:crt_usr_nm}}</a></h4>
+				{{else !tar_usr_nm}}
+					<h4 class="name"><a href="../sns/userHome_p.html?tar_usr_id={{:crt_usr_id}}">{{:crt_usr_nm}}</a></h4>
+				{{else}}
+					<h4 class="name"><a href="../sns/userHome_p.html?tar_usr_id={{:tar_usr_id}}">{{:tar_usr_nm}}</a></h4>
+					<span class="part"><a href="../sns/userHome_p.html?tar_usr_id={{:crt_usr_id}}">{{:crt_usr_nm}}</a></span>
+				{{/if}}
+		</header>
+		<div class="feedCont">
+		{{if !detailView}}
+			<a href="../sns/postDetail_p.html?post_id={{>post_id}}&tar_obj_id={{>tar_obj_id}}&tar_obj_tp={{>tar_obj_tp}}&tar_usr_id={{>tar_usr_id}}&tar_grp_id={{>tar_grp_id}}">
+		{{/if}}
+			{{if cntn}}
+	 			{{if list_user}}
+					{{:cntn.makePostContent(list_user)}}
+				{{else}}
+					{{:cntn.replaceNewLine()}}
+				{{/if}}
+			{{/if}}
+		{{if !detailView}}
+			</a>
+		{{/if}}
+		</div>
+		
+		<!-- 파일올리기 -->
+		{{if (list_file)}}
+			<div class="fileUp gab">
+				<ul>
+				{{if list_file }} {{:~tmplLoader("snsPost.list_file", list_file)}} {{/if}}
+				</ul>
+			</div>
+		{{/if}}
+		{{if (list_photo) && !detailView}}
+			<div class="fileUp gab {{if list_photo.length ==2}}half{{else list_photo.length ==3}}third{{else list_photo.length ==4}}forth{{else list_photo.length >= 5}}fifth{{/if}}">
+				<ul>
+					{{if list_photo }} {{:~tmplLoader("snsPost.list_file", list_photo)}} {{/if}}
+				</ul>
+			</div>
+		{{/if}}
+		<!--// 파일올리기 -->
+
+		{{if list_link}}
+			{{:~tmplLoader("snsPost.list_link", list_link)}}
+		{{/if}}
+		
+		<!-- 설문 -->
+		{{if list_survey }}
+		<form name="frmPoll_{{:post_id}}" id="frmPoll_{{:post_id}}" >
+		<input type="hidden" name="post_id" value="{{:post_id}}" >
+		<div class="feedPoll" id="survey_{{:post_id}}" >
+			<div class="pollBox" id="choice_{{:post_id}}" style="display: none;">
+				<h5><em>poll</em>설문내용</h5>
+				<ul>
+				{{for list_survey}}
+					<li><input type="radio" name="survey_itm_id" value="{{:survey_itm_id}}" id="check_{{:survey_itm_id}}" ><label for="check_{{:survey_itm_id}}" >{{:survey_itm_nm}}</label></li>
+				{{/for}}
+				</ul>
+				<div class="bt" >
+					<a href="javascript:;" class="button2" onclick="$SurveyVote.saveSnsSurveyVote({data : $('#frmPoll_{{:post_id}}').serialize()}, function(jsonData) {$('#choice_{{:post_id}}').hide();listSnsSurveyVoteResult('{{:post_id}}');});" >투표</a>
+					<a href="javascript:;" class="button2" id="postVoteResult_{{:post_id}}" onclick="$('#choice_{{:post_id}}').hide();listSnsSurveyVoteResult('{{:post_id}}');" >결과보기</a>
+				</div>
+			</div>
+			<div class="pollBox result" id="result_{{:post_id}}" style="display: none;" value='{"voted_yn" : "{{:voted_yn}}", "post_id" :"{{:post_id}}"}'></div>
+		</div>
+		</form>
+		{{/if}}
+		<!--// 설문 -->			
+	</div><!-- //feedInner -->
+	
+	<!--댓글 수, 추천 수, 작성시간-->
+	<footer class="feedGood">
+		<p class="feedCount">
+			<a href="javascript:;" class="like count" onclick="$Like.toggleSnsLike({data:{post_id:'{{:post_id}}'}},function(jsonData){$('#post_{{>post_id}} .feedCount .like').text(jsonData.statusInfo.like_cnt)});">{{:like_cnt}}</a>
+			<a href="../sns/postDetail_p.html?post_id={{>post_id}}&tar_obj_id={{>tar_obj_id}}&tar_obj_tp={{>tar_obj_tp}}&tar_usr_id={{>tar_usr_id}}&tar_grp_id={{>tar_grp_id}}" class="reply count">{{:reply_cnt}}</a>
+		</p>
+		<time>{{:crt_dttm.formatDatetime()}}{{if dvc_tp_nm}} from {{:dvc_tp_nm}} {{/if}}</time>
+	</footer>
+	
+	<!-- 댓글 리스트 -->
+	<div class="feedReplyList">
+		<ul id="reply_{{:post_id}}" >
+	{{if list_reply}}
+			{{:~tmplLoader("snsPost.list_reply_p", list_reply)}}
+		{{/if}}
+		</ul>
+	</div>
+	
+	<!-- 댓글 입력폼 -->
+	{{if detailView}}
+	<div class="feedRepleWrite">
+		<form name="frmReply" id="frmReply_{{>post_id}}" onsubmit="return false;" >
+			<input type="hidden" name="up_post_id" value="{{>post_id}}" >
+			<input type="hidden" name="post_tp" value="FEED" >
+			<div class="inputTx" >
+				<textarea rows="1" cols="3" name="cntn" id="reply_cntn" placeholder="댓글쓰기"></textarea>
+				<div id="userSearchArea" ></div>
+				<div id="postUserList" style="display:none" >
+					<ul>
+					</ul>
+				</div>
+			</div>
+			<button onclick="saveSnsPostReply(this);" class="bt" id="test" value="{{:post_id}}" >글입력버튼</button>
+		</form>
+	</div>
+	{{/if}}	
+		
+	<!-- 북마크, 삭제버튼 -->
+	<div class="feedMng">
+		<a href="javascript:;" onclick="$Bookmark.toggleSnsBookmark({data : { post_id : '{{:post_id}}' }}, function(jsonData) { if ($('#post_{{>post_id}} .feedMng > a').hasClass('on')) { $('#post_{{>post_id}} .feedMng > a').removeClass('on'); } else {$('#post_{{>post_id}} .feedMng > a').addClass('on');} });" class="bookmark {{if bookmark_yn == 'Y'}} on {{/if}}" >북마크</a>
+		{{if is_owner == 'Y'}}
+			<a href="javascript:;" onclick="if(window.confirm('삭제하시겠습니까?')) {$Post.deleteSnsPost({data : { post_id : '{{:post_id}}' }}, function(jsonData) {$('#post_{{>post_id}}').remove();})}" class="close" >피드삭제</a>
+		{{/if}}
+	</div>
+</article>
+	{{else}}
+	<article class="feedBox feedList">
+		<div class="feedNo">조회된 데이터가 없습니다.</div>
+	</article>
+{{/for}}
+ <div class="btn_wrap" id="add_more_btn"><a href="javascript:;" class="button more">게시물 더 보기</a></div>

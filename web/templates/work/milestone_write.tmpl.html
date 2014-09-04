@@ -1,0 +1,62 @@
+			<!-- 타이틀 -->
+			<div class="title" ><h3>Milestone</h3></div>
+			<!-- //타이틀 -->
+
+			<div id="milestone_input" >
+				<form id="frmPost" name="frmPost" onsubmit="return false;" >
+				<input type="hidden" name="miles_id" value="{{:miles_id}}" />
+				<input type="hidden" name="post_id" value="{{:post_id}}" />
+				<input type="hidden" name="work_id" value="{{:work_id}}" />
+				<input type="hidden" name="crt_usr_id" id="crt_usr_id" value="{{:crt_usr_id}}" />
+				<input type="hidden" name="tar_obj_ttl" value="{{:tar_obj_ttl}}" />
+				{{for listsnspostuser}}
+				<input type="hidden" name="work_usr_id" value="{{:usr_id}}" />
+				{{/for}}
+
+				<table class="write" summary="등록 레이어입니다." >
+					<caption>업무 관리</caption>
+					<tbody>
+						<tr>
+							<th>제목</th>
+							<td colspan="3" ><input type="text" name="ttl" id="ttl" maxlength="40" placeholder="제목을 입력하세요." value="{{:ttl}}" ></td>
+						</tr>
+						<tr>
+							<th>시작일자</th>
+							<td><input type="text" id="start_dt" name="start_dt" class="datePicker dateis" placeholder="날짜선택" readonly="readonly" value="{{:start_dt == undefined ? '' : start_dt.formatDate()}}" ></td>
+							<th>종료일자</th>
+							<td><input type="text" id="end_dt" name="end_dt" class="datePicker dateis" placeholder="날짜선택" readonly="readonly" value="{{:end_dt == undefined ? '' : end_dt.formatDate()}}" ></td>
+						</tr>
+						<tr>
+							<th>완료일자</th>
+							<td><input type="text" id="cplt_dt" name="cplt_dt" class="datePicker dateis" placeholder="날짜선택" readonly="readonly" value="{{:cplt_dt == undefined ? '' : cplt_dt.formatDate()}}" ></td>
+							<th>상태</th>
+							<td>
+								<div class="sort_dropdown" id="sort_dropdown_pgrs_st" style="width:90px;" >
+									<input type="hidden" name="pgrs_st" value="{{:(pgrs_st == null) ? 'NST' : pgrs_st}}" />
+									<button type="button" >{{if pgrs_st_nm != null}} {{:pgrs_st_nm}} {{else}} 대기 {{/if}}</button>
+									<ul style="height:80px;display:none;" >
+										<li data="NST" ><a href="javascript:;" >대기</a></li>
+										<li data="ING" ><a href="javascript:;" >진행</a></li>
+										<li data="FIN" class="last" ><a href="javascript:;" >완료</a></li>
+									</ul>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				</form>
+
+				<!-- 버튼 -->
+				<div class="btn_wrap tr" >
+					{{if (milestone_st == null) || (milestone_st == 'NST' && crt_usr_yn == 'Y') || (milestone_st == 'ING' && tar_usr_yn == 'Y') }}
+					{{/if}}
+					{{if (pgrs_st != 'FIN')}}
+					{{/if}}
+					<a href="javascript:;" class="button b" onclick="saveSnsMilestone();" >저장</a>
+					{{if (miles_id != nulll)}}
+					<a href="javascript:;" class="button b" onclick="deleteSnsMilestone('{{:miles_id}}');" >삭제</a>
+					{{/if}}
+					<a href="javascript:;" class="button" onclick="cancelSnsMilestone();" >취소</a>
+				</div>
+				<!-- //버튼 -->
+			</div>

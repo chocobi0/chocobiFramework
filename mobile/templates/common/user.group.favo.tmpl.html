@@ -1,0 +1,35 @@
+ {{if arrLength > 0 }}
+	{{for statusInfo}}
+		{{if favo_yn == 'Y'}}
+			<li>
+				<div class="photo">
+					<img src="../../../file/image.json?file_path={{:grp_img_min_path}}&noimg=resources/img/null60g.png" alt="사진" class="poshytip">
+				</div>
+				<div class="list_wrap">
+					<a href="../sns/groupHome.html?grp_id={{:grp_id}}" class="name"><strong>{{:grp_nm}}</strong></a>
+					<p class="part">구성원 : {{:member_cnt}} 명</p>
+				</div>
+				<div class="bt_follow del"><button id="favo_{{:rn}}" onclick="if(window.confirm('[즐겨찾기]를 삭제하시겠습니까?')); {$Group.toggleFavorite({data: {grp_id: '{{:grp_id}}'}}, function (jsonData) {if($('#favo_{{:rn}}').parent().parent().children('li').length > 1) {$('#favo_{{:rn}}').parent().remove()} else {$('#favo_{{:rn}}').parent().parent().html('<li><span>즐겨찾기 등록된 그룹이 없습니다.</span></li>');$('#favo_{{:rn}}').parent().remove()}});}return false;">즐겨찾기 삭제</button></div>
+				<!-- layer_private -->
+				<div class="layer_private" style="display:none;">
+					<p>{{:grp_intro}}</p>
+					<div class="quickBt">
+						<a href="../sns/groupHome.html?grp_id={{:grp_id}}" title="그룹방문">그룹방문</a>
+						<a href="javascript:;" title="그룹채팅">그룹채팅</a>
+						<a href="../sns/listGroupMember.html?grp_id={{:grp_id}}" title="그룹원">그룹원</a>
+						<a href="../sns/planHome.html?grp_id={{:grp_id}}" title="그룹일정">일정</a>
+						<a href="../sns/groupFile.html?grp_id={{:grp_id}}" title="그룹파일">파일</a>
+						<a href="../sns/groupMgmt.html?grp_id={{:grp_id}}" title="그룹원">설정</a>
+					</div>
+				</div>
+				<!--// layer_private -->
+			 </li>
+		{{/if}}
+	{{/for}}
+{{else }}
+	{{if currentPage == 1}}
+		<li>
+			<span>즐겨찾기 등록된 그룹이 없습니다.</span>
+		</li>
+	{{/if}}
+{{/if}}

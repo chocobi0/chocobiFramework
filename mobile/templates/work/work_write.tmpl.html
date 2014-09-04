@@ -1,0 +1,131 @@
+<div id="work_input" >
+	<input type="hidden" name="work_id" value="{{:work_id}}" />
+	<input type="hidden" name="post_id" value="{{:post_id}}" />
+	<input type="hidden" name="crt_usr_id" id="crt_usr_id" value="{{:crt_usr_id}}" />
+	
+	<div class="layerUI">
+		<h2 class="hidden">업무등록 입력레이어</h2>
+		<div class="layerLi">
+			<ul>
+				<li><label>제목</label><input type="text" name="ttl" id="" maxlength="200" placeholder="제목을 입력하세요." value="{{:ttl}}" ></li>
+				<li class="p0 bg">
+					<div class="option clearfix">
+						<span>
+							<select name="grp_cd" id="sort_dropdown_grp_cd">
+								<option value="GNL">일반</option>
+								<option value="STSK">전략과제</option>
+							</select>
+						</span>
+						<span>
+							<select name="pgrs_st" id="sort_dropdown_pgrs_st">
+								<option value="NST" >대기</option>
+								<option value="ING" >진행</option>
+								<option value="FIN">완료</option>
+							</select>
+						</span>						
+						<span>
+							<input type="number" name="pgrs_rate" id="pgrs_rate" maxlength="3" placeholder="진행율%" value="{{:pgrs_rate}}" >
+						</span>
+						<span>
+							<select name="grp_dtl_cd" id="sort_dropdown_grp_dtl_cd">
+								<option value="STSK_000" >없음</option>
+								<option value="STSK_001" >방폐물관리 전문성 제고</option>
+								<option value="STSK_002" >사용후핵연료 사업역량 강화</option>
+								<option value="STSK_003" >환경보전-안전역할 강화</option>
+								<option value="STSK_004">지속가능경영체계 고도화</option>
+							</select>
+						</span>							
+					</div>				
+				</li>
+				<li>
+					<label>시작일자</label>
+					
+					<input type="date" id="start_dt" name="start_dt" placeholder="날짜선택" class="dateInput" value="{{:start_dt == undefined ? '' : start_dt.formatDate()}}">				
+				</li>
+				<li>
+					<label>종료일자</label>
+					<input type="date" id="end_dt" name="end_dt" placeholder="날짜선택" class="dateInput" value="{{:end_dt == undefined ? '' : end_dt.formatDate()}}" >	
+				</li>
+				<li class="p0 gab"><textarea name="cntn" rows="3" cols="1" placeholder="내용을 입력해 주세요.">{{:cntn}}</textarea></li>
+				<li class="search">
+					<label>책임자</label>
+					{{if pgrs_st != 'FIN'}}
+					<div class="user_serarch_wrap searchInput" id="UserSearchByName_fnlApprYn_Y" >
+						<input type="text" id="" name="srchTextY" placeholder="대상자 검색" value=""/>
+						<button type="button">검색</button>
+					</div>
+					{{/if}}
+					<div class="user_serarch_wrap" id="work_user_list_Y" >
+						<ul class="thumbnail only thumb_s" data="Y" >
+						{{for listsnspostuser}}
+							{{if fnl_appr_yn == 'Y'}}
+							<li id="user_{{:usr_id}}" >
+								<input type="hidden" name="work_usr_id" value="{{:usr_id}}" >
+								<input type="hidden" name="fnl_appr_yn" id="fnl_appr_yn" value="Y" >
+								<a href="javascript:;" class="photo"><img src="../../../file/photo.json?file_path={{:usr_photo}}&noimg=mobile_phone/resources/images/null60.png" alt="{{:usr_nm}}" title="{{:usr_nm}}" ></a>
+								<strong class="name">{{:usr_nm}}</strong>
+								{{if pgrs_st != 'FIN'}}
+								<a href="javascript:;" class="close" onclick="deletedUser('{{:usr_id}}', this)" >삭제</a>
+								{{/if}}
+							</li>
+							{{/if}}
+						{{/for}}
+						</ul>
+					</div>
+				</li>
+				<li class="search">
+					<label>참여자</label>
+					{{if pgrs_st != 'FIN'}}
+					<div class="user_serarch_wrap searchInput" id="UserSearchByName_fnlApprYn_N" >
+						<input type="text" id="" name="srchTextN" placeholder="대상자 검색" value="" />
+						<button type="button">검색</button>
+					</div>
+					{{/if}}
+					<!-- 추가된 참조자 -->
+					<div class="user_serarch_wrap" id="work_user_list_N" >
+						<ul class="thumbnail only thumb_s" data="N" >
+						{{for listsnspostuser}}
+							{{if fnl_appr_yn == 'N'}}
+							<li id="user_{{:usr_id}}" >
+								<input type="hidden" name="work_usr_id" value="{{:usr_id}}" >
+								<input type="hidden" name="fnl_appr_yn" value="N" >
+								<a href="javascript:;" class="photo"><img src="../../../file/photo.json?file_path={{:usr_photo}}&noimg=mobile_phone/resources/images/null60.png" alt="{{:usr_nm}}" title="{{:usr_nm}}" ></a>
+								<strong class="name">{{:usr_nm}}</strong>
+								{{if pgrs_st != 'FIN'}}
+								<a href="javascript:;" class="close" onclick="deletedUser('{{:usr_id}}', this)" >삭제</a>
+								{{/if}}
+							</li>
+							{{/if}}
+						{{/for}}
+						</ul>
+					</div>
+					<!-- //추가된 참조자 -->				
+				</li>
+				<li class="search" id="docFileList" >
+					<label>파일</label>
+					<div class="file_bt">
+						<form name="docFileUpload" id="docFileUpload" action="../../../file/upload.json" method="POST" enctype="multipart/form-data" onsubmit="return false;" >
+							<input type="file" name="file" class="filesearch" multiple="multiple" title="파일 업로드" >
+							<a id="btnDocDeleteFile" href="javascript:;" class="button3 del">삭제</a>
+						</form>
+					</div>
+					<div class="file_list">
+						<ul>
+						{{for doc_file_list}}
+							<li id="{{:attach_file_id}}" onclick="selectFile('doc', this);" >{{:attach_nm}}
+							<input type="hidden" name="attach_file_id" value="{{:attach_file_id}}" >
+							<input type="hidden" name="attach_tp_cd" value="FILE" >
+							<input type="hidden" name="attach_nm" value="{{:attach_nm}}" >
+							<input type="hidden" name="physcl_file_nm" value="{{:physcl_file_nm}}" >
+							<input type="hidden" name="attach_yn" value="Y" >
+							</li>
+						{{/for}}
+						</ul>
+					</div>					
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>
+
+<div class="blockUI"></div>

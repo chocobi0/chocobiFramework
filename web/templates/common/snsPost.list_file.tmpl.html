@@ -1,0 +1,23 @@
+
+{{if attach_tp_cd == 'FILE'}}
+	<li class="up_file">
+<!-- 파일 패스와 원본 파일명을 사용한 다운로드. --> 
+	{{if (aprv_st == '2' && in_allw_yn == 'Y') }}
+		<div><a href="javascript:;" onclick="$File.download({ data : { file_path : '{{:physcl_file_path}}', file_nm : '{{:attach_nm}}'} });"><img src="../../../resources/img/{{:~getIcon(physcl_file_nm.substring(physcl_file_nm.lastIndexOf('.') + 1, physcl_file_nm.length))}}" alt=""><span>{{:attach_nm}}</span></a></div>
+	{{else}}
+		<div><a href="javascript:;" onclick="alert('미승인 파일입니다.');"><img src="../../../resources/img/{{:~getIcon(physcl_file_nm.substring(physcl_file_nm.lastIndexOf('.') + 1, physcl_file_nm.length))}}" alt=""><span>{{:attach_nm}}</span></a></div>
+	{{/if}}
+<!-- 파일 아이디를 사용한 다운로드..
+ 		<div><a href="javascript:;" onclick="$File.download({ data : { attach_file_id : '{{:attach_file_id}}'} });"><img src="../../../resources/img/{{:~getIcon(physcl_file_nm.substring(physcl_file_nm.lastIndexOf('.') + 1, physcl_file_nm.length))}}" alt=""><span>{{:attach_nm}}</span></a></div>
+  -->
+	</li>
+{{else attach_tp_cd == 'PHOT'}}
+	<li class="up_img">
+<!-- 이미지 호출... -->
+	{{if (aprv_st == '2' && in_allw_yn == 'Y')}}
+		<div><a href="../../../file/image.json?file_path={{:physcl_file_path}}&noimg=resources/img/thumb_noimg.jpg" class="fancybox"><img src="../../../file/image.json?file_path={{:physcl_file_path_m}}&noimg=resources/img/thumb_noimg.jpg" alt=""></a></div>
+	{{else}}
+		<div><img src="../../../resources/img/thumb_disapprov.jpg" alt=""></div>
+	{{/if}}
+	</li>
+{{/if}}

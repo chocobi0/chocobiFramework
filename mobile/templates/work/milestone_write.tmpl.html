@@ -1,0 +1,38 @@
+<div id="milestone_input" >
+	<form id="frmPost" name="frmPost" onsubmit="return false;" >
+	<input type="hidden" name="miles_id" value="{{:miles_id}}" />
+	<input type="hidden" name="work_id" value="{{:work_id}}" />
+	
+	<div class="layerUI">
+		<h2 class="hidden">마일스톤등록 입력레이어</h2>
+		<div class="layerLi">
+			<ul>
+				<li>
+					<label>제목</label>
+					<input type="text" name="ttl" id="ttl" maxlength="40" placeholder="제목을 입력하세요." value="{{:ttl}}" >
+				</li>
+				<li>
+					<label>시작일자</label>
+					<input type="date" id="start_dt" name="start_dt" class="datePicker dateis" placeholder="날짜선택" value="{{:start_dt == undefined ? '' : start_dt.formatDate()}}" >
+				</li>
+				<li>
+					<label>종료일자</label>
+					<input type="date" id="end_dt" name="end_dt" class="datePicker dateis" placeholder="날짜선택" value="{{:end_dt == undefined ? '' : end_dt.formatDate()}}" >
+				</li>
+				<li>
+					<label>완료일자</label>
+					<input type="date" id="cplt_dt" name="cplt_dt" class="datePicker dateis" placeholder="날짜선택" value="{{:cplt_dt == undefined ? '' : cplt_dt.formatDate()}}" >
+				</li>
+				<li>
+					<label>상태</label>
+					<select name="pgrs_st" id="pgrs_st">
+						<option value="NST" {{if pgrs_st == 'NST'}} selected {{/if}}>대기</option>
+						<option value="ING" {{if pgrs_st == 'ING'}} selected {{/if}}>진행</option>
+						<option value="FIN" {{if pgrs_st == 'FIN'}} selected {{/if}}>완료</option>
+					</select>				
+				</li>
+			</ul>
+		</div>	
+	</div>
+	</form>
+</div>

@@ -1,0 +1,83 @@
+{{for statusInfo}}
+	<h2 class="subTit">과제관리</h2>
+		<!-- board -->
+		<div class="board">
+			<div class="boardTit">
+				<span class="state">{{:pgrs_st_nm}}</span>
+				<h3 class="mtit ellip">{{:ttl}}</h3>
+			</div>
+	
+			<div class="boardStit">
+				<p>{{:cntn.replaceNewLine()}}</p>
+			</div>
+	
+			<ul class="boardTable">
+				<li><strong class="th w">시작일자:</strong><time>{{if start_dt}} {{:start_dt.formatDate()}} {{/if}}</time></li>
+				<li><strong class="th w">종료일자:</strong><time>{{if end_dt}} {{:end_dt.formatDate()}} {{/if}}</time></li>
+				<li>
+					<strong class="th fs">진행율</strong>
+					<div class="progress td bd">
+						<span class="progressBg"><span class="progressBar" style="width:{{:(pgrs_rate == null) ? 0 : pgrs_rate}}%;" ></span></span><em class="progressNum">{{:(pgrs_rate == null) ? 0 : pgrs_rate}}%</em>
+					</div>			
+				</li>
+				<li class="half">
+					<strong class="th fs">담당자</strong>
+					<div class="thumbnail only bd td" id="user_{{:crt_usr_id}}">
+						<figure class="photo"><a href="../sns/userHome_p.html?tar_usr_id={{:crt_usr_id}}" ><img src="../../../file/image.json?file_path={{:crt_usr_photo}}&noimg=mobile_phone/resources/images/null60.png" alt="{{:crt_usr_nm}}" title="{{:crt_usr_nm}}" /></a></figure>
+						<strong class="name">{{:crt_usr_nm}}</strong>
+						<span class="part"></span>
+					</div>
+				</li>
+				<li class="half r">
+					<strong class="th fs">책임자</strong>
+					
+					{{for listsnspostuser}}
+						{{if fnl_appr_yn == 'Y'}}
+							<div class="thumbnail only bd td" id="user_{{:usr_id}}">
+							
+								<figure class="photo" >
+									<a href="../sns/userHome_p.html?tar_usr_id={{:usr_id}}" ><img src="../../../file/image.json?file_path={{:usr_photo}}&noimg=mobile_phone/resources/images/null60.png" alt="{{:usr_nm}}" title="{{:usr_nm}}" /></a>
+								</figure>
+								<strong class="name">{{:usr_nm}}</strong>
+								<span class="part"></span>
+							</div>
+						{{/if}}
+					{{/for}}
+				</li>
+				<li class="cb">
+					<strong class="th fs">참여자</strong>
+					<div class="td bd">
+						{{for listsnspostuser}}
+							{{if fnl_appr_yn == 'N'}}
+							<div class="thumbnail only" id="user_{{:usr_id}}" >
+								<figure class="photo"><a href="../sns/userHome_p.html?tar_usr_id={{:usr_id}}" ><img src="../../../file/image.json?file_path={{:usr_photo}}&noimg=mobile_phone/resources/images/null60.png" alt="{{:usr_nm}}" title="{{:usr_nm}}" /></a></figure>
+								<strong class="name">{{:usr_nm}}</strong>
+								<span class="part"></span>
+							</div>
+							{{/if}}
+						{{/for}}
+					</div>
+				</li>
+				<li class="file">
+					{{if doc_file_list.length > 0}}
+						<strong class="th fs">첨부파일</strong>
+						<div class="td bd">
+							{{for doc_file_list}}
+							<span><a onclick="selectFile('doc', this);">{{:attach_nm}}</a>
+									<input type="hidden" name="attach_file_id" value="{{:attach_file_id}}">
+									<input type="hidden" name="attach_tp_cd" value="FILE">
+									<input type="hidden" name="attach_nm" value="{{:attach_nm}}">
+									<input type="hidden" name="physcl_file_nm" value="{{:physcl_file_nm}}">
+									<input type="hidden" name="attach_yn" value="Y">
+							</span>
+							{{/for}}
+						</div>
+					{{else}}
+						<span>자료가 없습니다.</span>
+					{{/if}}
+				</li>
+			</ul>
+	
+		</div>
+		<!--// board -->
+{{/for}}

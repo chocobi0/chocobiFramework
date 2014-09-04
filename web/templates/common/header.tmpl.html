@@ -1,0 +1,136 @@
+<!-- header -->
+<div class="top">
+	<h1><a href="#home"><img src="web/img/top_logo{{:site_id}}.png" alt="정부3.0" /></a></h1>
+	<!-- search -->
+	<div class="searchbox">
+		<form method="post" name="frmTotalSearch" id="frmTotalSearch" onsubmit="return false">
+			<fieldset>
+			<legend>통합검색입력폼</legend>
+			<label for="sq">통합검색입력</label><input class="searchInput" type="text" id="sq" name="sq" placeholder="통합검색" value="" maxlength="25" onkeypress="return searchCheck(this);"/>
+			<input class="searchBtn" type="submit" alt="검색" onclick="global_search();" />
+			</fieldset>
+		</form>
+	</div>
+	<!-- gnb -->
+	<div class="lnb">
+		<p class="alarm" id="alarm_click">
+			<a href="javascript:;" title="알림" >
+				<img src="web/img/gl_alarm_left.png" alt="새글알람표시" />
+				<span class="count" id="alarm">0</span>
+				<em title="new" id="notification_new" style="display: none;">n</em>
+			</a>
+		</p>
+		<div class="myset">
+			<!-- 이미지 없을 때<img src="../img/img_null40.gif" alt="" /> -->
+			<!-- <span><img src="{{:photo_img_min}}" alt="{{:usr_nm}}" /></span> -->
+			<span class="thumb" onclick="dropdown()"><img src="../file/image.json?file_path={{:photo_img_min_path}}&noimg=combination/web/img/null30.png" alt="{{:usr_nm}}" title="{{:usr_nm}}"/></span>
+			<!--<a href="../sns/userHomeUI?tar_usr_id={{:usr_id}}" onclick="dropdown()">{{:usr_nm}}</a> -->
+			<a href="javascript:;" class="name" onclick="dropdown()">{{:usr_nm}}</a>
+			<ul id="setting" style="display:none;">
+				<li><a href="#myProfile">설정</a></li>
+				<li class="last"><a href="javascript:;" title="로그아웃" onclick="$Login.logout(function(jsonData) {window.location.href='../../UI/login/loginUI';});">로그아웃</a></li>
+			</ul>
+		</div>
+		<!-- //myset -->
+		<!-- <p class="log"><a href="javascript:;" title="로그아웃" onclick="$Login.logout(function(jsonData) {window.location.href='../../UI/login/loginUI';});">로그아웃</a></p> -->
+	</div>
+	<!-- //gnb -->
+	<!-- alarm tap -->
+	<div class="alarm_tap" id="alarm_tap"></div>
+	<!-- alarm tap -->
+</div>
+<!-- //top -->
+
+<!-- 상단메뉴 : 활성화시 on-->
+<div class="topbar_wrap">
+	<div class="top_inner">
+		<h2 class="hide">상단메뉴</h2>
+		<ul class="topmenu">
+		{{if outs_usr_yn == 'Y'}}
+			<li class="allmenu"><!-- <a href="javascript:;"> --><!-- </a> --></li>
+			<li><a href="#home">HOME</a></li>
+			<li><a href="#userHome">소통커뮤니티</a></li>
+			<li style="display: none;"><a href="../cms/cmsChartList">CMS</a></li>
+			<li style="display: none;"><a href="../conference/conferenceHome">회의관리</a></li>
+			<!-- <li><a href="">일정관리</a></li> -->
+			<li style="display: none;"><a href="../work/workHome">과제관리</a></li>
+			<li style="display: none;"><a href="../memo/memoHome">메모보고</a></li>
+			<li style="display: none;"><a href="../chart/i2talkChart">i2TalkChart</a></li>
+			<li style="display: none;"><a href="../strategy/strategyHome">전략추진</a></li>
+			<li style="display: none;"><a href="../account/accountHome">활동관리</a></li>
+		{{else}}
+			<li class="allmenu"><!-- <a href="javascript:;"> --><!-- </a> --></li>
+			<li><a href="#home/home">HOME</a></li>
+			<li><a href="#sns/userHome">소통커뮤니티</a></li>
+			<li><a href="../cms/cmsChartList">CMS</a></li>
+			<li><a href="../conference/conferenceHome">회의관리</a></li>
+			<!-- <li><a href="">일정관리</a></li> -->
+			<li><a href="#work/workHome">과제관리</a></li>
+			<li><a href="../memo/memoHome">메모보고</a></li>
+			<li><a href="../chart/i2talkChart">i2TalkChart</a></li>
+			<li><a href="../strategy/strategyHome">전략추진</a></li>
+			<li><a href="../account/accountHome">활동관리</a></li>
+		{{/if}}
+		</ul>
+		<!-- //top menu -->
+		<!-- group menu -->
+		<h2 class="hide">그룹메뉴</h2>
+		<ul class="groupmenu">
+		{{if outs_usr_yn != 'Y'}}
+			<li class="user_all"><a href="../sns/userListAll" title="사용자목록">사용자목록</a></li>
+			<li class="group_all"><a href="../sns/groupListAll" title="그룹/부서목록">그룹/부서목록</a></li>
+			<li class="group_make"><a href="../sns/groupCreate" title="그룹만들기">그룹만들기</a></li>
+			<!-- 기능 사용이 필요 할 시 주석 풀고 콘텐츠 정리 해서 사용합시다. <li class="group_more"><a href="../sns/userListAll" title="전체사용자">전체사용자</a></li> -->
+		{{/if}}
+		</ul>		
+		<!-- //group menu -->		
+		<!-- 		
+		<div class="chat_wrap">
+		</div> -->
+	</div><!-- //top inner -->
+</div><!-- //topbar wrap -->
+
+<script type="text/javascript">
+function searchCheck() {
+	if(event.keyCode == 13) {
+		global_search();
+		return false;
+	} else {
+		return true;
+	}
+}
+
+function global_search() {
+	var searchText = $("#frmTotalSearch input[name='sq']").val();
+	if(searchText == "") {
+		alert("검색어를 입력 하세요.");
+		return;
+	} else {
+		window.location.href="../sns/searchHome?sq="+encodeURIComponent(searchText);
+	}
+	return false;
+}
+
+function goHome() {
+	$Login.logout();
+}
+
+
+function dropdown() {
+	$("#setting").fadeToggle(300);
+	// 	var redirectUrl = '../sns/myProfile';
+	// 	window.location = redirectUrl;
+}
+function logout() {
+}
+
+/* container backgrouond 20140708 by phj */
+var tt = $('#container').find('#content').length;
+if(tt > 0){
+	$('#container').addClass('container');
+}else{
+	$('#container').removeClass('container');
+}
+</script>
+
+<!-- //header -->

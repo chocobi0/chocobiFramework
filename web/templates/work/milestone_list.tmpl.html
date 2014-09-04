@@ -1,0 +1,59 @@
+
+			<!-- 타이틀 -->
+			<div class="title" ><h4 class="stit" >Milestone</h4></div>
+			<!-- //타이틀 -->
+
+			<div class="board" >
+				<table class="list mt10" summary="마일스톤 리스트" >
+				<caption>마일스톤 리스트</caption>
+				<colgroup>
+					<col width="8%" />
+					<col />
+					<col width="10%" />
+					<col width="15%" />
+					<col width="15%" />
+					<col width="15%" />
+				</colgroup>
+				<thead>
+					<tr>
+						<th scope="col" >번호</th>
+						<th scope="col" >제목</th>
+						<th scope="col" >진행상태</th>
+						<th scope="col" >시작일</th>
+						<th scope="col" >종료일</th>
+						<th scope="col" >완료일</th>
+					</tr>
+				</thead>
+				<tbody id="listMilestone" >
+					<!-- Loop Start -->
+					{{for statusInfo}}
+					<tr>
+						<td>{{:rn}}</td>
+						{{if (#parent.parent.data.crt_usr_yn == 'Y')}}
+						<td class="subject" ><a href="./milestoneWrite.html?work_id={{:work_id}}&miles_id={{:miles_id}}" >{{:ttl}}</a></td>
+						{{else}}
+						<td class="subject" >{{:ttl}}</td>
+						{{/if}}
+						<td>{{:pgrs_st_nm}}</td>
+						<td>{{:(start_dt == null) ? '' : start_dt.formatDate()}}</td>
+						<td>{{:(end_dt == null) ? '' : end_dt.formatDate()}}</td>
+						<td>{{:(cplt_dt == null) ? '' : cplt_dt.formatDate()}}</td>
+					</tr>
+					{{else}}
+					<tr>
+						<td colspan="6" >조회된 데이터가 없습니다.</td>
+					</tr>
+					{{/for}}
+					<!-- Loop End -->
+				</tbody>
+				</table>
+
+				<!-- 버튼 -->
+				<div class="btn_wrap tr" id="buttonWrap" style="display:none" >
+				{{if (crt_usr_yn == 'Y')}}
+					<a href="../work/milestoneWrite.html?work_id={{:work_id}}" class="button b" >신규</a>
+				{{/if}}
+				</div>
+				<!-- //버튼 -->
+
+			</div>

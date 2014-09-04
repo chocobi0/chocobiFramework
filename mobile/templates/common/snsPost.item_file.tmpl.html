@@ -1,0 +1,35 @@
+{{if fileType.indexOf("image") != -1}}
+	<!-- attach pairs -->
+	<input type="hidden" name="attach_tp_cd" value="PHOT">
+	<input type="hidden" name="attach_nm" value="{{:fileName}}">
+	<input type="hidden" name="physcl_file_nm" value="{{:systemFileName}}"><!-- system will define it -->
+	<input type="hidden" name="usr_link" value="">
+	<input type="hidden" name="video_link" value="">
+	<input type="hidden" name="video_img_link" value="">
+	<input type="hidden" name="descrip" value="">
+	<input type="hidden" name="img_wid" value="">
+	<input type="hidden" name="img_hei" value="">
+	<input type="hidden" name="img_mid" value="">
+	<input type="hidden" name="img_mid_wid" value="">
+	<input type="hidden" name="img_mid_hei" value="">
+	
+	<!-- // attach pairs -->
+	<div><img src="../../../file/temp_image.json?file_path={{:filePath}}" alt="" style="width: 100px;"></div>
+{{else}}
+	<!-- attach pairs -->
+	<input type="hidden" name="attach_tp_cd" value="FILE">
+	<input type="hidden" name="attach_nm" value="{{:fileName}}">
+	<input type="hidden" name="physcl_file_nm" value="{{:systemFileName}}"><!-- system will define it -->
+	<input type="hidden" name="usr_link" value="">
+	<input type="hidden" name="video_link" value="">
+	<input type="hidden" name="video_img_link" value="">
+	<input type="hidden" name="descrip" value="">
+	<input type="hidden" name="img_wid" value="">
+	<input type="hidden" name="img_hei" value="">
+	<input type="hidden" name="img_mid" value="">
+	<input type="hidden" name="img_mid_wid" value="">
+	<input type="hidden" name="img_mid_hei" value="">
+	
+	<!-- // attach pairs -->
+	<div class="up_file"><img src="../../resources/images/{{:icon}}" alt=""><br>{{:fileName}}</div>
+{{/if}}
