@@ -39,7 +39,7 @@ require(['require'], function(require){
 	    baseUrl: 'common/js',
 	    urlArgs: "bust=" + (new Date()).getTime(),
 	    paths: {
-	        jquery				: 'libs/jquery-1.11.0.min',
+	        jquery				: 'libs/jquery-1.11.1.min',
 	        targetPath			: targetPath,
 	        TMPL				: targetPath + '/templates',
 	        CSS					: targetPath + '/css',
